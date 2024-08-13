@@ -1,0 +1,132 @@
+---
+title: '因果分析簡介, 數學知識基礎'
+author: 'Steven'
+date: '2024/08/13'
+output:
+    html_document 
+    #html_notebook
+    #word_document 
+    #pdf_document 
+    #md_document 
+---
+
+## 1. 因果分析: [個人觀點 (2024年5月)](files/first_presentation.pdf)
+
+### 1-1. 補充: 相關性與因果 
+
+* 有時候兩者間存在因果關係，卻看不到明顯相關性。這可能嗎？一件事物如何能影響另一件事物，卻沒有明顯的相關性呢？
+    
+* 例子：(Cunningham, pp. 7)  
+    一位水手在風大的日子駕船橫越湖面。風吹來時，他調整舵向，精確抵消風的力量。舵來回轉動，但船卻沿著直線航行。一個不懂風與船的人（**沒有因果模型，只見表象**）可能會說：「他的舵壞了！幫他換個舵吧！」他不理解舵的動作與船的方向之間的關係。
+    
+* 例子：供需法則下的價格與數量
+
+### 1-2. 補充: Domain knowledge, World model (Molak 2003, pp. 322)
+
+* 你在公車站牌旁，街道上有個大水坑，一輛車直衝水坑而來，你本能地跳開，因此沒被濺到。
+    
+* 你的反應很可能是多種因素的結果，包括對威脅性刺激（濺起的泥水）的本能反應，但這不完全如此。你提前注意到了一輛車，並可能模擬了接下來會發生的事情。
+    
+* 這樣的模擬需要我們擁有一個世界模型：你對於當一個相對堅硬的物體（輪胎）以足夠的速度穿過水坑時會發生什麼的預測，很可能來自於各種不同的經驗。這其中可能包含實驗性的成分（例如你在兩歲時跳進水坑，並觀察自己這樣做的效果）以及觀察性的成分（例如你看到一個人被車濺起水花並觀察其後果）。
+
+### 1-3. 補充: Casual Inference vs. Causal Discovery
+
+* 前者仰賴於統計推論，後者相當於[探索性資料分析 (EDA)](files/吳漢銘_EDA.pdf)
+
+### 1-4. 推薦書籍: 實務取向
+
+* [Aleksander Molak - Causal Inference and Discovery in Python (2023)](files/Aleksander Molak - Causal Inference and Discovery in Python (2023).pdf)
+
+* [Matheus Facure - Causal Inference in Python (2023)](files/Matheus Facure - Causal Inference in Python (2023).pdf)
+
+* [Scott Cunningham - Causal Inference_ The Mixtape (2021)](files/Scott Cunningham - Causal Inference_ The Mixtape (2021).pdf)
+
+
+## 2. 數學基礎知識複習
+
+### 2-1. 期望值、條件機率
+#### 2-1-1. 期望值的定義
+
+* 離散變數版本:
+$$\mu_X := \text{E}[X]= \sum_{\color{blue}{x_i} \in \mathcal{D}} \color{blue}{x_i} \cdot\color{red}{\text{Pr}(X=x_i)}.$$
+
+* 連續變數版本:
+$$\mu_X := \text{E}[X]= \int_{\color{blue}{x} \in \mathcal{D}} \color{blue}{x} \color{red}{f(x)dx}.$$
+* 一般的單變數版本:
+$$\mu_X := \text{E}[X]= \int_{\color{blue}{x} \in \mathcal{D}} \color{blue}{x} \color{red}{dF(x)}.$$
+* 離散的雙變數版本:
+$$\mu_{X+Y} := \text{E}[X+Y]= \sum_{\color{blue}{(x_i,y_j)} \in \mathcal{D}} \color{blue}{(x_i+y_j)} \cdot \color{red}{\text{Pr}(X=x_i, Y=y_j)}.$$
+* 連續的雙變數版本:
+$$\mu_{X+Y} := \text{E}[X+Y]= \int_{\color{blue}{(x,y)} \in \mathcal{D}} \color{blue}{(x+y)} \color{red}{f(x,y)dxdy}.$$
+
+#### 2-1-2. 最重要的性質
+
+* 恆等式: 
+$$\text{E}[X] + \text{E}[Y] = \text{E}[X+Y].$$
+
+    * 離散版本的證明:
+    
+    $$RHS = \sum_{(x_i,y_j) \in \mathcal{D}} (x_i+y_j) \cdot \text{Pr}(X=x_i, Y=y_j)\\
+    =\sum_{(x_i,y_j) \in \mathcal{D}} x_i \cdot \text{Pr}(X=x_i, Y=y_j)+\sum_{(x_i,y_j) \in \mathcal{D}} y_j \cdot \text{Pr}(X=x_i, Y=y_j)\\
+    =\sum_{x_i \in \mathcal{D}_x} x_i  \cdot \color{green}{\left(\sum_{y_j: (x_i, y_j) \in \mathcal{D}} \text{Pr}(X=x_i, Y=y_j)\right)} +
+    \sum_{y_j \in \mathcal{D}_y} y_j  \cdot \color{orange}{\left(\sum_{x_i: (x_i, y_j) \in \mathcal{D}} \text{Pr}(X=x_i, Y=y_j)\right)}\\
+    =\sum_{x_i \in \mathcal{D}_x} x_i  \cdot \color{green}{\text{Pr}(X=x_i)} +
+    \sum_{y_j \in \mathcal{D}_y} y_j  \cdot \color{orange}{\text{Pr}(Y=y_j)}
+    =LHS.
+    $$
+
+* 然而，一般而言:
+$$\text{E}[X] \cdot \text{E}[Y] \color{red}{\neq} \text{E}[X \cdot Y].$$
+
+
+#### 2-1-3. 變異數的定義、標準差 (standard deviation)、標準誤 (standard error)
+
+* 變異數的定義: 
+$$ \sigma_X^2 := \text{E}[(X-\mu_x)^2] = \text{E}[X^2] - \mu_X^2 = \text{E}[X^2] - \text{E}[X]^2.$$
+其中，$\sigma_X$ 稱為隨機變量 $X$ 的標準差，為變異數的開根號。
+
+* 標準誤 vs. 標準差:
+
+    * The standard deviation (SD) is a measure of the amount of variation or dispersion of a set of values. In other words, the SD measures the spread of data around the mean, and it provides a measure of how much individual data points deviate from the mean.  The SD quantifies *scatter — how much the values vary from one another*.
+
+   * The standard error (SE) of a *statistic* (usually an estimate of a parameter) is *the standard deviation of its sampling distribution* or **an estimate of that standard deviation**. In other words, the SE is a measure of the uncertainty in an estimate of a population parameter based on samples. e.g. Condider $\hat{\mu}_X = \frac{1}{N}\sum_{i=1}^N x_i.$ Let $\sigma$ denote the standard deviation of the sample distribution of $\hat{\mu}_X$.
+   
+   * If the statistic is the sample mean, it is called the standard error of the mean (SEM). SEM quantifies *how precisely you know the true mean of the population*. **It takes into account both the value of the SD and the sample size**: The larger the SD, the larger the SEM; the larger the sample size, the smaller the SEM. e.g. If $x_1, x_2,\cdots,x_N$ are i.i.d sampled, then $\sigma^2 = \frac{1}{N^2}\sum_{i=1}^N {\sigma_X}^2 = \frac{1}{N}\sigma_X^2.$ Hence, the SEM is $\sigma = \sqrt{\frac{1}{N}\sigma_X^2}$.
+
+### 2-2. 條件機率與貝氏定理
+
+* 事件 B 發生的情況下，事件 A 發生的條件機率:
+$$ \text{Pr}(A|B) := \frac{\text{Pr}(A \cap B)}{\text{Pr}(B)}$$.
+
+* 獨立性: 事件 B 的發生與否不改變 A 發生的機率 (prior probability = posterior probability)  
+$$ \text{Pr}(A) = \text{Pr}(A|B) \Rightarrow \text{Pr}(A)\cdot\text{Pr}(B) = \text{Pr}(A \cap B) \Rightarrow \text{Pr}(B) = \text{Pr}(B|A). $$
+（若事件 A 發生的機率不為零，）事件 A 的發生與否不改變事件 B 發生的機率。
+
+#### 2-2-1. Monty Hall 問題 
+
+* [Wikipedia 簡介](https://en.wikipedia.org/wiki/Monty_Hall_problem)
+* [我對此問題的改寫，從貝式定理連結到貝式學派的觀點（參考連結的最後一題）](files/sol_5.html)
+
+
+### 2-3 頻率學派: 假設檢定
+#### 2-3-1 虛無假設與p-value 
+* 虛無假設 (null Hypothesis): 我們是想要得到與虛無假設相反的觀點（但非通例）
+* 在虛無假設正確的情況下，對某個統計量 (statistic) 將有一個特定的分布
+* 若這次我們得到一個數值，我們說達到這個數值或更極端的機率叫做 p-value
+    * **p-value 是條件機率**
+    * 單尾或雙尾(看驗證的目的)
+* 我們武斷認定一個門檻值 $\alpha$，稱此為顯著水準 (significance level)，當 p-value 低於這個假定，我們說: 拒絕虛無假設。
+    * 通常是 5%（以前的社會科學）, 1%（現在的社會科學）, 0.1%, 部分學科如高能物理則使用 0.0001%。
+    * 解釋：若虛無假設發生，統計量出現這個數字或更極端的機率（就是p-value）太小了，因此我們傾向推翻虛無假設。
+* p-value 到底是什麼？
+    * [林澤民的部落格文章](https://blog.udn.com/nilnimest/84404190)
+    * p-value 不是什麼? [參考](files/Statistics_Done_Wrong-EN.pdf) (Reinhart 2015, pp. 42) 
+
+#### 2-3-2 type 1 error 與 type 2 error
+
+### 2-4 貝氏學派
+* 機器學習、貝氏網路、因果分析基本上都是基於貝氏學派
+    * 是一種更方便的框架: 更適合蒐集更多資訊，修正過去的認知
+* 好書推薦: 如何衡量萬事萬物
+    * [中文版](https://www.books.com.tw/products/0010931305)
+    * [英文版](files/Douglas W. Hubbard, Richard Seiersen - How to Measure Anything in Cybersecurity Risk (2016).pdf)
