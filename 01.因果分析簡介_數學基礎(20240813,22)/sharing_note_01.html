@@ -475,9 +475,9 @@ Y=y_j)\\
 <li><p>大數法則與中央極限定理:<br />
 兩者是機率論與統計學的核心定理，刻畫了期望值與變異數的深刻意義。</p>
 <ul>
-<li><a href="files/19106_什麼是機率與機率法則.pdf">數普文1</a>介紹了這兩個定理，文章開頭就澄清比較直觀的
+<li><a href="files/19106_什麼是機率與機率法則.pdf">蔡聰明的文章1</a>介紹了這兩個定理，文章開頭就澄清比較直觀的
 (弱) 大數法則的常見誤解。</li>
-<li><a href="files/21301_誤差論和最小平方法.pdf">數普文2</a>揭露平均值
+<li><a href="files/21301_誤差論和最小平方法.pdf">蔡聰明的文章2</a>揭露平均值
 （作為一個統計量）的深刻意涵，描述「取平均」與最大似然 (Maximum
 Likelihood)、常態分配的聯繫。</li>
 </ul></li>
@@ -532,23 +532,50 @@ posterior probability)<br />
 \text{Pr}(B) = \text{Pr}(B|A). \]</span> （若事件 A
 發生的機率不為零，）事件 A 的發生與否不改變事件 B 發生的機率。</p></li>
 </ul>
+<div id="獨立性與相關性雙重期望值定理" class="section level4">
+<h4>2-2-1. 獨立性與相關性、雙重期望值定理</h4>
+<ul>
+<li>事件可以定義成隨機變量在某些範圍取值，例如：「隨機變量 <span class="math inline">\(X\)</span> 取值不超過 2」，即 <span class="math inline">\(\{X \leq 2\}\)</span> 就是一個事件。</li>
+<li>獨立性（隨機變量的術語）:<br />
+兩個隨機變量 <span class="math inline">\(X\)</span> 與 <span class="math inline">\(Y\)</span> 獨立，表示在 <span class="math inline">\(X\)</span> 取值的任意範圍 <span class="math inline">\(S_X\)</span> 與 <span class="math inline">\(Y\)</span> 取值的任意範圍 <span class="math inline">\(S_Y\)</span>， 總是成立 <span class="math display">\[  \text{Pr}(X \in S_X)\cdot\text{Pr}(Y \in S_Y) =
+\text{Pr}((X \in S_X) \cap (Y \in S_Y)).\]</span></li>
+<li>若兩個隨機變量 <span class="math inline">\(X\)</span> 與 <span class="math inline">\(Y\)</span> 獨立，則它們不相關。<br />
+離散版本的證明:<br />
+<span class="math display">\[\text{E}[X \cdot Y]=\sum_{i, j}
+\text{Pr}(X=x_i, Y=y_j)x_iy_j
+  \\=\sum_{i, j} \text{Pr}(X=x_i)\text{Prob}(Y=y_j)x_iy_j \quad
+\text(獨立性)
+  \\=\sum_{i} \text{Pr}(X=x_i)x_i \cdot\sum_{j} \text{Prob}(Y=y_j)y_j
+  \\= \text{E}[X]\cdot \text{E}[Y],\]</span> 則 <span class="math inline">\(\text{Cov}(X,Y)=\text{E}[X \cdot Y] - \text{E}[X]
+\cdot \text{E}[Y]=0\)</span>.</li>
+</ul>
+</div>
 <div id="monty-hall-問題" class="section level4">
-<h4>2-2-1. Monty Hall 問題</h4>
+<h4>2-2-2. Monty Hall 問題</h4>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Monty_Hall_problem">Wikipedia
-簡介</a></li>
-<li><a href="files/sol_5.html">我對此問題的改寫，從貝式定理連結到貝式學派的觀點（參考連結的最後一題）</a></li>
+簡介</a>
+<ul>
+<li><a href="files/概率萬花筒.pdf">此問題的變形</a>: 參考內文 77
+頁「例五：該死的獄卒」</li>
+<li><a href="files/sol_5.html">我對此問題的擴寫</a>:
+參考最後一題，從貝式定理連結到貝式學派的觀點</li>
+</ul></li>
 </ul>
 </div>
 </div>
 <div id="頻率學派-假設檢定" class="section level3">
 <h3>2-3 頻率學派: 假設檢定</h3>
-<div id="虛無假設與p-value" class="section level4">
-<h4>2-3-1 虛無假設與p-value</h4>
+<div id="虛無假設與-p-value" class="section level4">
+<h4>2-3-1 虛無假設與 p-value</h4>
 <ul>
-<li>虛無假設 (null Hypothesis):
-我們是想要得到與虛無假設相反的觀點（但非通例）</li>
-<li>在虛無假設正確的情況下，對某個統計量 (statistic)
+<li>虛無假設 (null Hypothesis): 先假設為正確，然後想辦法推翻它
+<ul>
+<li>可以納入孔恩 (Kuhn) 的科學革命的結構</li>
+<li>通常比較無聊，故稱 null,
+實務上，我們通常想要推翻它得到比較有趣的結果</li>
+</ul></li>
+<li>在虛無假設正確的情況下，某個統計量 (statistic)
 將有一個特定的分布</li>
 <li>若這次我們得到一個數值，我們說達到這個數值或更極端的機率叫做 p-value
 <ul>
@@ -558,7 +585,12 @@ posterior probability)<br />
 level)，當 p-value 低於這個假定，我們說: 拒絕虛無假設。</li>
 <li>通常是 5%（以前的社會科學）, 1%（現在的社會科學）, 0.1%,
 部分學科如高能物理則使用 0.0001%。</li>
-<li>解釋：若虛無假設發生，統計量出現這個數字或更極端的機率（就是p-value）太小了，因此我們傾向推翻虛無假設。</li>
+<li>解釋：若虛無假設發生，統計量出現這個數字或更極端的機率（就是
+p-value）太小了，因此我們傾向推翻虛無假設。</li>
+</ul></li>
+<li>應用:
+<ul>
+<li>法學的無罪推定精神，參考<a href="files/為何採無罪推定.pdf">黃文璋的文章</a></li>
 </ul></li>
 </ul>
 </div>
@@ -566,14 +598,41 @@ level)，當 p-value 低於這個假定，我們說: 拒絕虛無假設。</li>
 <h4>2-3-2 p-value 的相關澄清</h4>
 <p>p-value 到底是什麼？</p>
 <ul>
-<li><a href="https://blog.udn.com/nilnimest/84404190">林澤民的部落格文章</a></li>
-<li>無罪推定</li>
-<li>p-value 不是什麼? <a href="files/Statistics_Done_Wrong-EN.pdf">參考
-Reinhart (2015), pp. 42</a></li>
+<li>觀念測試: <a href="files/Statistics_Done_Wrong-EN.pdf">(參考
+Reinhart 2015, pp. 42)</a><br />
+假設我們測試兩種藥物的表現。經由顯著性檢定比較平均表現得到 <span class="math inline">\(p =
+0.01\)</span>，表示兩者有統計上顯著的差異。請問下列有多少選項正確？
+<ul>
+<li>已經絕對否定了虛無假設（兩者之間沒有差異）</li>
+<li>虛無假設成立的概率為 <span class="math inline">\(1\%\)</span></li>
+<li>已經絕對證明了替代假設（兩者之間存在差異）</li>
+<li>可以推斷出備擇假設成立的概率</li>
+<li>如果我們決定拒絕虛無假設，做出錯誤決定的概率是 <span class="math inline">\(1\%\)</span></li>
+<li>您的實驗結果是可靠的，也就是說如果重複多次實驗，<span class="math inline">\(99\%\)</span> 的情況下會得到顯著結果</li>
+</ul></li>
+<li><a href="https://blog.udn.com/nilnimest/84404190">林澤民的部落格文章</a>
+<ul>
+<li>解釋上面文章的<a href="files/p_value.html">模擬</a></li>
+</ul></li>
 </ul>
 </div>
-<div id="type-1-error-與-type-2-error" class="section level4">
-<h4>2-3-３ type 1 error 與 type 2 error</h4>
+<div id="type-1-error-type-2-error-statistical-power-confusion-matrix-f-score" class="section level4">
+<h4>2-3-３ type 1 error, type 2 error, statistical power, confusion
+matrix, f-score</h4>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Confusion_matrix">Wikipedia</a>
+<ul>
+<li>type i error:
+若虛無假設正確（沒有患病），但檢定結果錯誤（以為有患病，偽陽性）<br />
+假設模型與檢驗方法的流程是正確的，此值就是 <span class="math inline">\(\alpha\)</span></li>
+<li>type ii error:
+若虛無假設錯誤（患病），但檢定結果錯誤（以為沒有患病，偽陰性）<br />
+此值稱為 <span class="math inline">\(\beta\)</span>, 與 <span class="math inline">\(\alpha\)</span> 有折抵 (trade-off) 關係</li>
+<li>precision 不是 1 - type i error</li>
+<li>recall = sensitivity = True positive rate = 1 - type ii error:
+若虛無假設錯誤（患病），檢定結果確實也正確（患病）</li>
+</ul></li>
+</ul>
 </div>
 </div>
 <div id="貝氏學派" class="section level3">
