@@ -12,7 +12,7 @@
 <meta name="author" content="Steven" />
 
 
-<title>因果分析簡介, 數學知識基礎</title>
+<title>因果分析簡介 &amp; 數學知識基礎</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,7 +349,7 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">因果分析簡介, 數學知識基礎</h1>
+<h1 class="title toc-ignore">因果分析簡介 &amp; 數學知識基礎</h1>
 <h4 class="author">Steven</h4>
 <h4 class="date">2024/08/13, 08/22, 08/29</h4>
 
@@ -653,17 +653,17 @@ p-value）若小於 <span class="math inline">\(\alpha\)</span>，實在很不�
 <li><p>單尾或雙尾（看驗證的目的）:</p>
 <ul>
 <li><p>假設虛無假設為 <span class="math inline">\(H_0: \mu =
-0\)</span>，對立假設 (驗證的目的) 為 <span class="math inline">\(H_1:
+0\)</span>，對立假設（驗證的目的）為 <span class="math inline">\(H_1:
 \mu \color{red}{\neq} 0\)</span>，若實際觀察到的結果為 <span class="math inline">\(\hat{\mu} = 1.8\)</span>，則 <span class="math display">\[\text{p-value} = \mathbb{P}\left(|\hat{\mu}| \geq
 1.8 \;|\; \mu = 0 \right) = \mathbb{P}\left(\hat{\mu} \geq 1.8 \vee
 \hat{\mu} \leq -1.8 \;|\; \mu = 0 \right),\]</span>
 是採用雙尾檢定。</p></li>
 <li><p>假設虛無假設為 <span class="math inline">\(H_0: \mu = 0\)</span>,
-對立假設 (驗證的目的) 為 <span class="math inline">\(H_1: \mu
+對立假設（驗證的目的）為 <span class="math inline">\(H_1: \mu
 \color{red}{\geq} 0\)</span>, 若實際觀察到的結果為 <span class="math inline">\(\hat{\mu} = 1.8\)</span>, 則 <span class="math display">\[\text{p-value} = \mathbb{P}\left(\hat{\mu} \geq
 1.8 \;|\; \mu = 0 \right),\]</span> 是採用單尾檢定。</p></li>
 <li><p>假設虛無假設為 <span class="math inline">\(H_0: \mu = 0\)</span>,
-對立假設 (驗證的目的) 為 <span class="math inline">\(H_1: \mu
+對立假設（驗證的目的）為 <span class="math inline">\(H_1: \mu
 \color{red}{\leq} 0\)</span>, 若實際觀察到的結果為 <span class="math inline">\(\hat{\mu} = 1.8\)</span>, 則 <span class="math display">\[\text{p-value} = \mathbb{P}\left(\hat{\mu} \leq
 1.8 \;|\; \mu = 0 \right),\]</span> 是採用單尾檢定…
 這個驗證目的完全和結果相反，所以 p-value
@@ -680,19 +680,19 @@ p-value）若小於 <span class="math inline">\(\alpha\)</span>，實在很不�
 pp. 42)</a><br />
 假設我們測試兩種藥物的表現。經由（比較兩者平均表現的）顯著性檢定得到
 <span class="math inline">\(p =
-0.01\)</span>，我們認為兩者有統計上顯著的差異。請問下列有多少選項正確？</p>
+0.01\)</span>，我們認為兩者有統計上顯著的差異。請問下列有那些選項正確？</p>
 <ol style="list-style-type: decimal">
-<li><p>已經絕對否定了虛無假設（兩者之間沒有差異）</p></li>
+<li><p>已經絕對否定了虛無假設（虛無假設：兩者之間沒有差異）</p></li>
 <li><p>虛無假設成立的機率為 <span class="math inline">\(1\%\)</span></p></li>
-<li><p>已經絕對證明了替代假設（兩者之間存在差異）</p></li>
-<li><p>可以推斷出替代假設成立的概率</p></li>
+<li><p>已經絕對證明了對立假設（對立假設：兩者之間存在差異）</p></li>
+<li><p>可以推斷出對立假設成立的機率</p></li>
 <li><p>如果我們決定拒絕虛無假設，做出錯誤決定的機率是 <span class="math inline">\(1\%\)</span></p></li>
 <li><p>您的實驗結果是可靠的，也就是說如果重複多次實驗，<span class="math inline">\(99\%\)</span> 的情況下會得到顯著結果</p></li>
 </ol></li>
 </ul>
 </div>
 <div id="type-1-error-type-2-error-statistical-power" class="section level4">
-<h4>2-3-3. type-1 error, type-2 error, statistical power,</h4>
+<h4>2-3-3. type-1 error, type-2 error, statistical power</h4>
 <ul>
 <li><p><em>type-1</em> error:
 若虛無假設正確（沒有患病），但檢定結果錯誤（以為有患病，偽陽性）的機率<br />
@@ -706,17 +706,18 @@ pp. 42)</a><br />
 <li><p>相關觀念釐清:<br />
 假想某國境內有比例為 <span class="math inline">\(q \;
 (0&lt;q&lt;1)\)</span>
-的人患病。今天有一個好事者拿了一批快篩劑，其偽陰性與偽陽性都控制在 <span class="math inline">\(1\%\)</span>。</p>
+的人患病。今天有一個好事者拿了一批快篩劑，其偽陰性與偽陽性都控制在 <span class="math inline">\(2\%\)</span>。</p>
 <ul>
 <li><p><span class="math inline">\(q\)</span> is the base rate, which
 means the prevalence of an event, such as a symptom, sign or disorder,
 within a given population.</p></li>
-<li><p>這個 <span class="math inline">\(1\%\)</span> 是 <span class="math inline">\(\alpha\)</span> (<em>type-1</em> error) 與 <span class="math inline">\(\beta\)</span> (<em>type-2</em> error)</p></li>
+<li><p>這個 <span class="math inline">\(2\%\)</span> 是 <span class="math inline">\(\alpha\)</span> (<em>type-1</em> error) 與 <span class="math inline">\(\beta\)</span> (<em>type-2</em> error)</p></li>
 <li><p>虛無假設是「境內的某人沒有患病」。那麼，<strong>虛無假設成立的機率
 =</strong> <span class="math inline">\(1 - q\)</span></p></li>
-<li><p>假設某人篩檢出陽性（落在虛無假設的拒絕域），p-value <span class="math inline">\(&lt;0.01\)</span>，不妨假設此時 p-value <span class="math inline">\(= 0.005\)</span></p></li>
-<li><p><strong>根據假設檢定，我們否決虛無假設</strong></p></li>
-<li><p><strong>以上否決了上一小節觀念測試的 1 - 5</strong><br />
+<li><p>假設某人篩檢出陽性（落在虛無假設的拒絕域），p-value <span class="math inline">\(&lt;\alpha = 0.02\)</span>，不妨假設此時 p-value
+<span class="math inline">\(= 0.01\)</span></p></li>
+<li><p><strong>根據假設檢定，我們拒絕虛無假設</strong></p></li>
+<li><p><strong>以上說明否決了上一小節觀念測試的 1 - 5</strong><br />
 p-value, <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> 都與虛無假設成立的機率 <span class="math inline">\(1-q\)</span> 無關</p></li>
 <li><p>如果重複多次測試，會有　<span class="math inline">\((1-q) \times
 \alpha + q \times (1-\beta)\)</span> 的情況得到顯著結果<br />
@@ -736,8 +737,8 @@ p值的陷阱〉</a></p></li>
 <li><p><a href="https://en.wikipedia.org/wiki/Confusion_matrix">Wikipedia</a></p></li>
 <li><p>精確率 precision <span class="math inline">\(=
 \frac{\text{TP}}{\text{TP} + \text{FP}}\)</span><br />
-在人臉辨識的情境中，若稱解鎖（有反應）為陽性，則我們希望<em>解鎖者儘量就是正確的人</em>，相當於追求高
-precision<br />
+在人臉辨識的情境中，若稱解鎖（有反應）為陽性，則我們希望<em>解鎖者儘量就是正確的人</em>，相當於追求<em>高
+precision</em><br />
 注意: precision <span class="math inline">\(= 1 -
 \frac{\text{FP}}{\text{TP} + \text{FP}}\)</span>， 不等於 1 -
 <em>type-1</em> error <span class="math inline">\(=1 -
@@ -749,10 +750,14 @@ precision<br />
 \frac{\text{TP}}{\text{TP} + \text{FN}}= 1 -\)</span> <em>type-2</em>
 error:<br />
 若虛無假設錯誤（患病），檢定結果確實也正確（患病）<br />
-在醫療的情境中，偽陰性比偽陽性後果嚴重很多，因此追求高 recall</p></li>
+在醫療的情境中，偽陰性比偽陽性後果嚴重很多，因此追求<em>高
+recall</em></p></li>
 <li><p>一般兩類別的分類情境，若沒有強烈理由說 precision 與 recall
 哪一個比較重要，則認定兩者都要有一定水準<br />
-我們採用兩者的調和平均 (harmonic mean), 稱為 <span class="math inline">\(F_1\)</span>-score 作為指標: <span class="math display">\[F_1 =
+我們採用兩者的調和平均 (harmonic mean), 稱為 <span class="math inline">\(F_1\)</span>-score 作為指標: <span class="math display">\[ \frac{1}{F_1} =
+\frac{1}{2}\left(\frac{1}{\text{precision}}+\frac{1}{\text{recall}}\right)
+\Leftrightarrow
+F_1 =
 \frac{2\cdot\text{precision}\cdot\text{recall}}{\text{precision}+\text{recall}}.\]</span></p>
 <ul>
 <li>討論串: <a href="https://stackoverflow.com/questions/26355942/why-is-the-f-measure-a-harmonic-mean-and-not-an-arithmetic-mean-of-the-precision">為何
