@@ -1,0 +1,115 @@
+---
+title: '因果發現'
+author: 'Steven'
+date: '2024/10/17, 24'
+output:
+    html_document 
+    #html_notebook
+    #word_document 
+    #pdf_document 
+    #md_document 
+---
+
+## 1. 因果發現 (Causal Discovery)
+
+* 這次分享基本上取自 [Aleksander Molak - Causal Inference and Discovery in Python (2023)](../references/Aleksander Molak - Causal Inference and Discovery in Python (2023).pdf) 第 12 - 14 章
+
+* 因果知識的來源:
+
+    * 科學實驗與模擬
+    
+    * 個人觀察與探索:  
+    「習慣化」的能力讓我們篩選資訊，專注於新的變化，逐步建立世界模型
+    
+    * 因果發現，或稱結構學習 (structure learning)
+    
+### 1.1 科學實驗與模擬
+
+* Karl Popper 的科學觀: 可證偽性 (falsifiability)
+
+* 科學方法:
+
+    * （受控的）實驗
+
+    * 隨機對照實驗 (randomized controlled trials) 到一般的實驗設計
+    
+    * 社會科學的准實驗等方法（不少諾貝爾經濟學獎得主發展出來的方法）
+    
+    * 在公認的環境下進行模擬
+    
+### 1.2 因果發現極簡論
+
+* 基於 DAG 的學習方法
+
+* 相當新的領域，非常不成熟
+
+* 優點: 便宜、快速
+
+* 缺點: 組合爆炸、錯誤率非常高
+
+
+## 2. 因果發現與機器學習
+
+#### 2.1 因果發現的基本假設
+
+* 因果關係充分 (causal sufficiency): **不存在**無法觀測的干擾因子 (lack of hidden confounding)
+
+* 忠實性 (faithfulness): 資料應該與因果結構一致
+
+    * 如果兩個變量在數據中看起來是獨立的，那麼在因果模型裡，它們不應該有直接的因果連結
+    
+    * 如果數據中顯示它們有某種相關性，因果模型裡應該反映出它們之間有因果關係
+
+* 最小性 (minimality): 基於化約主義的科學觀
+
+    * 如果有幾個因果結構模型 (structural causal model) 可以解釋資料，我們傾向採用簡單的結構
+    
+    * 最簡單的結構: 畫成 DAG 時，對這個圖移除任何邊都無法與資料一致
+    
+#### 2.2 因果發現的主要四個流派
+
+* 這種分類基於 Glymour, C., Zhang, K., and Spirtes, P. (2019)
+
+* 可以追溯回 Rebane, G., and Pearl, J. (1987):
+
+    * 假設資料生成過程為 DAG，如何從數據恢復因果結構
+    
+* 後續主要發展在 UCLA, CMU, Stanford     
+    
+* 基於約束 (constraint-based) 的方法 
+    
+    * 演算法: 歸納因果關係 (inductive causation), PC 算法
+    
+    * 套件: TETRAD
+    
+* 基於分數 (score-based) 的方法
+    
+    * 貝氏網路
+    
+    * 演算法: 貪婪搜索演算法 (greedy equivalence search, GES)
+
+* 函數型因果發現 (functional causal discovery)
+
+    * 獨立性成分分析 (independent component analysis, ICA)
+
+    * 假設變數之間的因果關係可以用函數來表示
+
+    * 通常應用於非線性關係的因果推斷
+    
+    * 演算法: 線性非高斯無環模型 (linear non-Gaussian acyclic model, LiNGAM)
+    
+* 基於梯度 (gradient-based) 的方法
+    
+    * 將圖空間的組合轉化為梯度的連續優化問題
+    
+    * 當前**最先進，也是最主要**的流派
+
+    * 演算法: NOTEARS (Zheng et al., 2018)
+    
+### 2.3 gCastle
+
+* 華為挪亞方舟實驗室 (Noah's Ark Lab) 在項目 trustworthyAI 的開源函式庫，用於因果發現，參考 [GitHub](https://github.com/huawei-noah/trustworthyAI/tree/master/gcastle) 與 [簡體中文文檔](https://github.com/huawei-noah/trustworthyAI/blob/master/gcastle/README.cn.md)
+
+* 四個主要模組: models, synthetic data generators, visualization tools, and model evaluation tools
+
+* [IPython Notebook 演示檔](ipynbs/Chapter_13.ipynb)
