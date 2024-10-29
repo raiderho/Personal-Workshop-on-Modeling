@@ -360,8 +360,11 @@ display: none;
 <h2>1. 因果發現 (Causal Discovery)</h2>
 <ul>
 <li><p>這次分享基本上取自 <a href="../references/Aleksander%20Molak%20-%20Causal%20Inference%20and%20Discovery%20in%20Python%20(2023).pdf">Aleksander
-Molak - Causal Inference and Discovery in Python (2023)</a> 第 12 - 14
-章</p></li>
+Molak - Causal Inference and Discovery in Python (2023)</a> 第 12 - 13
+章</p>
+<ul>
+<li>14 章也是相關的主題，有興趣的人可以自行查找</li>
+</ul></li>
 <li><p>因果知識的來源:</p>
 <ul>
 <li><p>科學實驗與模擬</p></li>
@@ -376,7 +379,7 @@ Molak - Causal Inference and Discovery in Python (2023)</a> 第 12 - 14
 <li><p>Karl Popper 的科學觀: 可證偽性 (falsifiability)</p></li>
 <li><p>科學方法:</p>
 <ul>
-<li><p>（受控的）實驗</p></li>
+<li><p>受控的實驗</p></li>
 <li><p>隨機對照實驗 (randomized controlled trials)
 到一般的實驗設計</p></li>
 <li><p>社會科學的准實驗等方法（不少諾貝爾經濟學獎得主發展出來的方法）</p></li>
@@ -405,7 +408,7 @@ confounding)</p></li>
 <li><p>忠實性 (faithfulness): 資料應該與因果結構一致</p>
 <ul>
 <li><p>如果兩個變量在數據中看起來是獨立的，那麼在因果模型裡，它們不應該有直接的因果連結</p></li>
-<li><p>如果數據中顯示它們有某種相關性，因果模型裡應該反映出它們之間有因果關係</p></li>
+<li><p>如果數據中顯示它們有某種相關性，因果模型裡應該反映出潛在的因果關係</p></li>
 </ul></li>
 <li><p>最小性 (minimality): 基於化約主義的科學觀</p>
 <ul>
@@ -463,6 +466,235 @@ tools, and model evaluation tools</p></li>
 <li><p><a href="ipynbs/Chapter_13.ipynb">IPython Notebook
 演示檔</a></p></li>
 </ul>
+</div>
+<div id="論文概覽-dags-with-no-tears-continuous-optimization-for-structure-learning-zheng-et-al.-2018" class="section level3">
+<h3>2.4 論文概覽: DAGs with NO TEARS: Continuous Optimization for
+Structure Learning (Zheng et al., 2018)</h3>
+<div id="引言" class="section level4">
+<h4>2.4.1 引言</h4>
+<ul>
+<li><p>從資料中學習有向無環圖（DAGs）是一個 NP 難題（Chickering, 1996;
+Chickering et al., 2004），這主要是由於無環性的約束具有組合性。</p></li>
+<li><p>然而，DAGs 在生物學（Sachs et al., 2005）、遺傳學（Zhang et al.,
+2013）、機器學習（Koller 和 Friedman, 2009）、以及因果推論（Spirtes et
+al., 2000）等多個領域中被廣泛應用。因此，發展新的學習 DAG
+的方法仍然是機器學習和統計學中的一個重要挑戰。</p></li>
+<li><p>本文提出了一種新的基於分數的 DAG
+學習方法，將傳統的組合優化問題轉化為連續規劃問題：</p></li>
+</ul>
+<p><span class="math display">\[
+\min_{\mathbf{W} \in \mathbb{R}^{d \times d}} F(\mathbf{W}) \quad
+\text{subject to (s.t.)} \quad G(\mathbf{W}) \in \text{DAGs}
+\iff
+\min_{\mathbf{W} \in \mathbb{R}^{d \times d}} F(\mathbf{W}) \quad
+\text{s.t.} \quad h(\mathbf{W}) = 0,
+\]</span></p>
+<p>其中 <span class="math inline">\(G(\mathbf{W})\)</span>
+是由加權鄰接矩陣 <span class="math inline">\(\mathbf{W}\)</span> 引出的
+<span class="math inline">\(d\)</span> 節點圖，而 <span class="math inline">\(h(\mathbf{W}) = 0\)</span>
+是一個平滑函數，其水平集（使函數為零）精確描述了無環圖的結構。</p>
+<ul>
+<li>本文的核心貢獻在於引入了平滑且連續的優化方法，這使得可以利用標準的數值算法來處理約束問題，而無需預先掌握圖模型的專門知識。從而在方法學上、計算上都大幅改善了求解過程。</li>
+</ul>
+<div id="貢獻" class="section level5">
+<h5>貢獻</h5>
+<ul>
+<li><p>作者構建了一個平滑函數，該函數具有可計算的導數，並能夠編碼無環性約束。</p></li>
+<li><p>本文開發了一個同時估計稀疏 DAG
+結構和參數的等式約束問題，並展示如何利用標準數值求解器來尋找駐點。</p></li>
+<li><p>本文在實驗評估中展示了所提方法的有效性，並與當前最先進的方法進行了比較。</p></li>
+<li><p>最值得注意的是，本文提出的方法非常簡單，只需要約 50 行 Python
+代碼即可實現。</p></li>
+</ul>
+</div>
+</div>
+<div id="背景" class="section level4">
+<h4>2.4.2 背景</h4>
+<p>DAG 學習問題的基本形式是給定一個數據矩陣 <span class="math inline">\(X \in \mathbb{R}^{n \times
+d}\)</span>，其由隨機向量 <span class="math inline">\(X = (X_1, \dots,
+X_d)\)</span> 的 <span class="math inline">\(n\)</span> 個 i.i.d.
+樣本組成，學習一個 DAG <span class="math inline">\(G \in D\)</span>，該
+DAG 表達了聯合分佈 <span class="math inline">\(P(X)\)</span>。傳統方法通常是在離散空間 <span class="math inline">\(D\)</span> 上操作，而本文則提出在實數矩陣空間
+<span class="math inline">\(\mathbb{R}^{d \times d}\)</span>
+進行操作。</p>
+<div id="打分函數與結構方程模型sem" class="section level5">
+<h5>打分函數與結構方程模型（SEM）</h5>
+<p>作者將 DAG 的學習轉換為優化一個加權鄰接矩陣 <span class="math inline">\(\mathbf{W}\)</span>，同時使用線性結構方程模型（SEM）來表示每個節點的聯合分佈。目標是最小化損失函數（如最小二乘損失），並引入
+<span class="math inline">\(\ell_1\)</span>
+正則化來促進稀疏解決方案：</p>
+<p><span class="math display">\[
+F(W) = \ell(W; X) + \lambda \|W\|_1
+\]</span></p>
+<p>此處，<span class="math inline">\(\ell(W; X)\)</span>
+表示最小二乘損失，<span class="math inline">\(\lambda\)</span>
+是正則化參數。這樣的正則化有助於學習稀疏的 DAG 結構。</p>
+</div>
+<div id="相關工作" class="section level5">
+<h5>相關工作</h5>
+<ul>
+<li><p>傳統的打分學習方法是一種組合優化問題，難以處理大規模的節點數量。</p></li>
+<li><p>先前的工作主要依賴於啟發式方法來加速算法，這些方法往往依賴於局部搜索或結構假設，如有界入度或有界樹寬。作者指出，這些方法在應對實際應用中的高連接節點時存在困難。</p></li>
+<li><p>本文的貢獻在於使用全局搜索而不是局部搜索，並且方法對數據的類型（連續或離散）保持通用。</p></li>
+</ul>
+</div>
+</div>
+<div id="無環性的全新刻畫" class="section level4">
+<h4>2.4.3 無環性的全新刻畫</h4>
+<p>為了使得 DAG
+學習問題可以應用現有的數值優化工具，本文提出將無環性的組合約束 <span class="math inline">\(G(W) \in \text{DAGs}\)</span>
+替換為一個平滑的等式約束 <span class="math inline">\(h(W) =
+0\)</span>，並列出幾個必要條件：</p>
+<ol style="list-style-type: lower-alpha">
+<li>當且僅當 <span class="math inline">\(W\)</span> 是無環的時候，<span class="math inline">\(h(W) = 0\)</span>；</li>
+<li><span class="math inline">\(h\)</span>
+的值能夠量化一個圖的「無環性」；</li>
+<li><span class="math inline">\(h\)</span> 是平滑的；</li>
+<li><span class="math inline">\(h\)</span> 及其導數易於計算。</li>
+</ol>
+<p>這些條件使得 DAG
+學習問題變得可微分，從而能使用標準的優化方法解決。</p>
+<div id="特殊情況二元鄰接矩陣" class="section level5">
+<h5>特殊情況：二元鄰接矩陣</h5>
+<p>對於二元鄰接矩陣 <span class="math inline">\(B \in \{0, 1\}^{d \times
+d}\)</span>，可利用矩陣的譜半徑和跡的特性來描述無環性。具體地，當 <span class="math inline">\(B\)</span> 是 DAG 時：</p>
+<p><span class="math display">\[
+\text{tr}(e^B) = d,
+\]</span></p>
+<p>這裡使用了矩陣指數來計算閉合路徑的權重和，進一步得出該圖是否包含閉合路徑。</p>
+</div>
+<div id="一般情況加權鄰接矩陣" class="section level5">
+<h5>一般情況：加權鄰接矩陣</h5>
+<ul>
+<li>對於實值的加權鄰接矩陣 <span class="math inline">\(W\)</span>，將
+<span class="math inline">\(W\)</span> 的元素通過 Hadamard 乘積 <span class="math inline">\(W \circ W\)</span>
+來確保非負性，然後應用矩陣指數，最終得出以下主要結果：</li>
+</ul>
+<p><span class="math display">\[
+h(W) = \text{tr}(e^{W \circ W}) - d = 0,
+\]</span></p>
+<p>這個平滑約束保證了矩陣 <span class="math inline">\(W\)</span>
+對應一個 DAG。</p>
+<ul>
+<li>然而，矩陣指數的計算時間複雜度為 <span class="math inline">\(O(d^3)\)</span>，這是處理高維數據時的一大挑戰，因為計算矩陣指數需要耗費大量時間。這裡的計算複雜度來自於矩陣指數本身，這是解決無環性約束的核心操作。</li>
+</ul>
+</div>
+<div id="核心結論" class="section level5">
+<h5>核心結論</h5>
+<ul>
+<li><p>這一平滑刻畫使得無環性問題能夠用標準優化方法來求解，並且計算效率可接受。</p></li>
+<li><p>矩陣指數的計算複雜度為 <span class="math inline">\(O(d^3)\)</span>，對於大規模圖來說是可行的。</p></li>
+<li><p>本方法在避免組合搜索的同時，依然能夠保證結構的正確性，並且這一刻畫在
+DAG 學習文獻中尚未被廣泛採用。</p></li>
+</ul>
+</div>
+</div>
+<div id="優化過程" class="section level4">
+<h4>2.4.4 優化過程</h4>
+<p>本節描述了如何基於第 3
+節的平滑無環性約束來進行優化。具體來說，作者使用了<strong>增廣拉格朗日法
+( augmented Lagrange method)</strong> 來求解帶有等式約束的優化問題。</p>
+<div id="step-1-使用增廣拉格朗日法求解等式約束問題" class="section level5">
+<h5>Step 1: 使用增廣拉格朗日法求解等式約束問題</h5>
+<ul>
+<li>本文將約束問題轉化為增廣拉格朗日形式：</li>
+</ul>
+<p><span class="math display">\[
+\min_{\mathbf{W} \in \mathbb{R}^{d \times d}} F(\mathbf{W}) +
+\frac{\rho}{2} |h(\mathbf{W})|^2 \quad \text{s.t.} \quad h(\mathbf{W}) =
+0,
+\]</span></p>
+<p>其中，<span class="math inline">\(\rho\)</span> 是一個懲罰參數。</p>
+<ul>
+<li><p>增廣拉格朗日法的優點在於它可以近似解決約束問題，而不需要將懲罰參數
+<span class="math inline">\(\rho\)</span> 增大到無限大。</p></li>
+<li><p>該方法的核心是對拉格朗日函數進行雙重梯度上升，更新拉格朗日乘子
+<span class="math inline">\(\alpha\)</span> 來逼近最優解。</p></li>
+</ul>
+</div>
+<div id="step-2-解無約束子問題" class="section level5">
+<h5>Step 2: 解無約束子問題</h5>
+<ul>
+<li><p>在增廣拉格朗日法的框架下，原問題轉化為一系列無約束子問題。這些子問題可以用常見的優化方法如
+L-BFGS 來求解。</p></li>
+<li><p>當引入 <span class="math inline">\(\ell_1\)</span>
+正則化時，本文使用了<strong>近端准牛頓法（PQN）</strong>，PQN）**，該方法有效地解決了非凸問題，並且通過記憶低秩結構來加速
+Hessian 的計算，進而減少矩陣指數的實際計算次數。</p></li>
+<li><p>這些二階方法的核心在於每次迭代能做出更大進展，因此在實際應用中，矩陣指數計算的總次數顯著減少，優化過程的效率得到提升。</p>
+<ul>
+<li>儘管使用了二階優化方法，時間複雜度仍然是 <span class="math inline">\(O(d^3)\)</span>。二階方法的優勢在於它們能夠加速收斂，減少所需的迭代次數。因此，時間複雜度雖未變，但係數變小，表現更好。</li>
+</ul></li>
+</ul>
+</div>
+<div id="step-3-閾值處理" class="section level5">
+<h5>Step 3: 閾值處理</h5>
+<p>為了進一步提高結果的精度，本文在優化過程中進行了<strong>閾值處理</strong>。具體來說，當獲得最終的加權鄰接矩陣
+<span class="math inline">\(\mathbf{W}_{\text{ECP}}\)</span>
+時，將小於某個閾值 <span class="math inline">\(\omega\)</span>
+的權重設置為零，這有助於避免由數值精度問題導致的微小循環。</p>
+</div>
+</div>
+<div id="小結" class="section level4">
+<h4>小結</h4>
+<ul>
+<li><p>本文提出了一個完整的優化框架，通過增廣拉格朗日法來解決帶有平滑無環性約束的問題，並使用近端準牛頓法進行快速求解。最後的閾值處理保證了結果中無關鍵的循環，從而保證了
+DAG 結構的正確性。</p></li>
+<li><p>透過增廣拉格朗日法和二階優化方法，本文在實際應用中減少了矩陣指數運算的次數，從而有效地改善了算法的計算效率。</p></li>
+</ul>
+</div>
+<div id="實驗" class="section level4">
+<h4>2.4.5 實驗</h4>
+<p>本節展示了本文方法的實驗結果，並與其他先進方法進行比較，包括
+GES（貪心等價搜索）、PC 算法，以及 LiNGAM。</p>
+<div id="參數估計" class="section level5">
+<h5>參數估計</h5>
+<p>本文首先進行了參數估計的定性研究，結果表明，NOTEARS
+在沒有閾值處理的情況下也能夠一致地估計出加權鄰接矩陣，並且即便在小樣本情況下引入
+<span class="math inline">\(\ell_1\)</span>
+正則化後依然表現穩定。圖形顯示了在不同樣本量下估計的加權鄰接矩陣，展示了算法在大樣本與小樣本時的效果差異。</p>
+</div>
+<div id="結構學習" class="section level5">
+<h5>結構學習</h5>
+<p>本文進一步檢驗了結構恢復的性能，使用了<strong>結構 Hamming
+距離（SHD）</strong>來衡量學習到的圖與真實圖之間的差異。實驗結果表明，當邊數較少時，貪心等價搜索（FGS）表現不錯，但隨著節點和邊的數量增多，NOTEARS
+的表現顯著提升。特別是當節點數量增加時，本文方法能夠一致地在不同的噪聲模型下保持良好的恢復效果。</p>
+</div>
+<div id="與全局最優解的比較" class="section level5">
+<h5>與全局最優解的比較</h5>
+<p>為了評估本文方法的求解能力，作者將其與
+GOBNILP（找到全局最優解的算法）進行了比較。結果顯示，儘管 NOTEARS
+只保證返回局部最優解，但實際上在很多情況下結果非常接近全局最優解，偏差非常小。實驗數據表明，NOTEARS
+在處理具有 10 個節點的小型 DAG
+時，結果與全局最優解的差異極小，且算法在高維情況下依然表現優異。</p>
+</div>
+<div id="真實數據" class="section level5">
+<h5>真實數據</h5>
+<p>在真實數據集上的實驗（使用 Sachs 等人 2005
+年的蛋白質和磷脂水平測量數據集）顯示，NOTEARS 估計的邊數和 SHD（結構
+Hamming 距離）均與 FGS
+方法相當，證明了本文方法在實際應用中的有效性。</p>
+</div>
+<div id="小結-1" class="section level5">
+<h5>小結</h5>
+<p>實驗表明，本文提出的 NOTEARS
+方法在參數估計和結構學習上均超越了現有的先進方法。特別是，當節點和邊數量增多時，本文方法的效果更為顯著，並且其求解結果非常接近全局最優解，展示了良好的性能。</p>
+</div>
+</div>
+<div id="討論" class="section level4">
+<h4>2.4.6 討論</h4>
+<p>本文與傳統方法相比，主要優勢在於全局更新方式和簡化的求解過程，避免了對圖的局部結構進行假設。但仍有一些限制，主要如下：</p>
+<ul>
+<li><p>局部最優與非凸性<br />
+本文的等式約束問題 <span class="math inline">\(h(W) = 0\)</span>
+是非凸的，因此現有的優化方法最多只能找到駐點，這意味著可能無法找到全局最優解。這一點是非凸優化問題的固有限制，但本文結果表明，實際應用中這一問題的影響較小。</p></li>
+<li><p>計算複雜度<br />
+儘管矩陣指數的計算時間複雜度為 <span class="math inline">\(O(d^3)\)</span>，在實際應用中這對於稀疏矩陣來說是可以接受的。未來的研究可以考慮進一步優化這一計算過程，特別是在處理密集圖時。此外，儘管本文使用了二階方法來減少計算步數，但本文沒有針對最壞情況進行複雜度分析，這一方面有待進一步研究。</p></li>
+<li><p>閾值選擇的改進<br />
+本文的閾值 <span class="math inline">\(\omega\)</span>
+是固定的次優值，未來的研究可以探索自適應的閾值選擇方法，根據不同的噪聲比和圖結構調整
+<span class="math inline">\(\omega\)</span>
+值，以進一步優化算法性能。</p></li>
+</ul>
+</div>
 </div>
 </div>
 
